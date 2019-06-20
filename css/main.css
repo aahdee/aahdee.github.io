@@ -1,3 +1,35 @@
 body {
-  background-color: #d890b0;
+  width: 70%;
+  margin: 100px auto;
+}
+
+nav ul, footer ul {
+  font-family: 'Montserrat', sans-serif;
+  list-style: none;
+  font-weight: bold;
+}
+
+nav ul li, footer ul li {
+  display: inline;
+  margin-right: 50px;
+}
+
+h1 {
+  font-family: 'Raleway', sans-serif;
+  margin: 60px auto 160px;
+  border: 1px solid green;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: #480020;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:visted {
+
 }
