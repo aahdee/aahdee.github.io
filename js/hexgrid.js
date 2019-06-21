@@ -50,6 +50,30 @@ function getHexNeighbor(a, dir)
   return hexAdd(a, hexDirs[dir]);
 }
 
+//get specific hexagons
+function getRing(center, radius)
+{
+  var results = [];
+  if (radius == 0)
+  {
+    results.push(center);
+  }
+  else
+  {
+    var start = hexAdd(center,hexMult(hexDir(4),radius));
+    for (var i = 0; i < 6; i++)
+    {
+      for (var j = 0; j < radius; j++)
+      {
+        results.push(start);
+        start = getHexNeighbor(start, i);
+      }
+    }
+  }
+  return results;
+}
+
+
 //start of orentation
 //f is the forward matrix. b is inverse.
 function Orientation(f0, f1, f2, f3, b0, b1, b2, b3, start_angle)
@@ -114,6 +138,8 @@ function getCorners(layout, hex) //where they are on the screen.
   }
   return corners;
 }
+
+//get specific hexagons
 
 //draw the hex from corners, uses p5
 function drawHex(layout, hex, color) //layout, hex
