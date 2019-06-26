@@ -5,12 +5,17 @@ var center;
 var size;
 var origin;
 var ring;
+var rad;
 
 function windowResized()
 {
   resizeCanvas(windowWidth,windowHeight);
   origin = Point(windowWidth/2,windowHeight/2);
+  rad = Math.max(windowWidth,windowHeight)/200 + 3;
+  boardReset(rad);
   resizeLayout(mainLayout, size, origin);
+  console.log("wh: " + windowHeight);
+  console.log("ww: " + windowWidth);
 }
 //generate the board once. its a hegagonal board
 function generateBoard(radius)
@@ -25,21 +30,30 @@ function generateBoard(radius)
     }
   }
 }
+//clears the hexes array and fills it with a board of new size.
+function boardReset(newRadius)
+{
+  hexes.length = 0;
+  generateBoard(newRadius);
+}
 
 
 function setup()
 {
   canvas = createCanvas(windowWidth,windowHeight);
+  rad = Math.ceil(Math.max(windowWidth,windowHeight)/200) + 3;
   canvas.position(0,0);
   canvas.style('z-index', '-1');
   size = Point(50, 50);
   origin = Point(windowWidth/2,windowHeight/2);
   mainLayout = Layout(pointyOrient,size,origin);
-  generateBoard(10);
+  generateBoard(rad);
   center = Hex(0,0,0);
-  console.log(windowHeight);
+  console.log("wh: " + windowHeight);
+  console.log("ww: " + windowWidth);
   ring = getRing(center, 3);
 }
+
 
 function draw()
 {
@@ -57,4 +71,5 @@ function draw()
   {
     drawHex(mainLayout, ring[i], 100);
   }
+  ellipse(windowWidth/2,windowHeight/2, 100,50)
 }
