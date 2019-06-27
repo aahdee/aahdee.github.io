@@ -73,6 +73,22 @@ function getRing(center, radius)
   return results;
 }
 
+//checks if the hexes has the same coordinates
+function isEqualsHex(hexa, hexb)
+{
+  return (hexa.q == hexb.q) && (hexa.r == hexb.r) && (hexa.s == hexb.s);
+}
+
+//checks if the hex is in an array
+function includesHex(array, hex, startIndex = 0)
+{
+  for (var i = startIndex; i < array.length; i++)
+  {
+    if (isEqualsHex(hex, array[i])) {return true;}
+  }
+  return false;
+}
+
 
 //start of orentation
 //f is the forward matrix. b is inverse.
