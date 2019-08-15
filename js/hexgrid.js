@@ -18,7 +18,7 @@ function Hex(q, r, s)
 }
 
 //equality
-function isEquals(hexa, hexb)
+function isEqualsHex(hexa, hexb)
 {
   return (hexa.q == hexb.q && hexa.r == hexb.r && hexa.s == hexb.s);
 }
@@ -39,7 +39,7 @@ function hexMult(a, k)
 
 //essentially the unit vectors of the hex grid
 var hexDirs = [Hex(1,0,-1), Hex(1,-1,0), Hex(0,-1,1), Hex(-1,0,1), Hex(-1,1,0), Hex(0,1,-1)];
-//check neighbors
+//get neighbor
 function hexDir(dir)
 {
   if(!(0 <= dir && dir <= 5)) throw "dir is out of range";
@@ -47,7 +47,7 @@ function hexDir(dir)
 }
 function getHexNeighbor(a, dir)
 {
-  return hexAdd(a, hexDirs[dir]);
+  return hexAdd(a, hexDirs(dir));
 }
 
 //get specific hexagons
@@ -73,11 +73,37 @@ function getRing(center, radius)
   return results;
 }
 
-//checks if the hexes has the same coordinates
+//diagonals
+//if you followed the line that a hex's vertex is the end of,
+//what is the hex that is at the other end of the line?
+//theres 6, 0 is the north hex (pointy orient) or top right (flat orient)
+//goes clockwise
+var hexDiags = [Hex(1,1,-2), Hex(2,-1,-1), Hex(1,-2,1), Hex(-1,-1,2), Hex(-2,1,1), Hex(-1,2,-1)];
+
+function hexDiag(diag)
+{
+  if(!(0 <= diag && diag <= 5)) throw "diag index out of range";
+  return hexDiags[diag];
+}
+
+function getDiagonal(a, diag)
+{
+  return hexAdd(a, hexDiag(diag));
+}
+
+//rotate
+//this is a 60 degree rotate around zero. 1 for clockwise, 0 for counter clockwise
+//as of 8/15/2019, this is at the center only and by one step
+//later can have rotate a hex around another hex.
+//var hexRotate = [Hex]
+
+
+//uhh redundant
+/*checks if the hexes has the same coordinates
 function isEqualsHex(hexa, hexb)
 {
   return (hexa.q == hexb.q) && (hexa.r == hexb.r) && (hexa.s == hexb.s);
-}
+}*/
 
 //checks if the hex is in an array
 function includesHex(array, hex, startIndex = 0)
@@ -99,6 +125,7 @@ function Orientation(f0, f1, f2, f3, b0, b1, b2, b3, start_angle)
 
 //im only using pointy so might as well only put that in.
 var pointyOrient = Orientation(Math.sqrt(3.0), Math.sqrt(3.0)/2.0, 0.0, 3.0/2.0, Math.sqrt(3.0)/3.0, -1.0/3.0, 0.0, 2.0/3.0, 0.5);
+var flatOrient = Orientation(3.0 / 2.0, 0.0, Math.sqrt(3.0) / 2.0, Math.sqrt(3.0), 2.0 / 3.0, 0.0, -1.0 / 3.0, Math.sqrt(3.0) / 3.0, 0.0);
 
 //to convert between the grid and the screen
 function Layout(orientaion, size, origin) //orientaion, point, point
